@@ -1,0 +1,15 @@
+C:\Users\HI\My_Items\Job\Softwares\VisualStudioCode-ws1\Sel_CSharp002\NewZeaLand\bin\Debug\NUnit3.TestAdapter.dll
+C:\Users\HI\My_Items\Job\Softwares\VisualStudioCode-ws1\Sel_CSharp002\NewZeaLand\bin\Debug\NUnit3.TestAdapter.pdb
+C:\Users\HI\My_Items\Job\Softwares\VisualStudioCode-ws1\Sel_CSharp002\NewZeaLand\bin\Debug\nunit.engine.dll
+C:\Users\HI\My_Items\Job\Softwares\VisualStudioCode-ws1\Sel_CSharp002\NewZeaLand\bin\Debug\nunit.engine.api.dll
+C:\Users\HI\My_Items\Job\Softwares\VisualStudioCode-ws1\Sel_CSharp002\NewZeaLand\bin\Debug\nunit.engine.core.dll
+C:\Users\HI\My_Items\Job\Softwares\VisualStudioCode-ws1\Sel_CSharp002\NewZeaLand\bin\Debug\testcentric.engine.metadata.dll
+C:\Users\HI\My_Items\Job\Softwares\VisualStudioCode-ws1\Sel_CSharp002\NewZeaLand\bin\Debug\NewZeaLand.dll
+C:\Users\HI\My_Items\Job\Softwares\VisualStudioCode-ws1\Sel_CSharp002\NewZeaLand\bin\Debug\NewZeaLand.pdb
+C:\Users\HI\My_Items\Job\Softwares\VisualStudioCode-ws1\Sel_CSharp002\NewZeaLand\bin\Debug\nunit.framework.dll
+C:\Users\HI\My_Items\Job\Softwares\VisualStudioCode-ws1\Sel_CSharp002\NewZeaLand\bin\Debug\nunit.framework.xml
+C:\Users\HI\My_Items\Job\Softwares\VisualStudioCode-ws1\Sel_CSharp002\NewZeaLand\obj\Debug\NewZeaLand.csproj.AssemblyReference.cache
+C:\Users\HI\My_Items\Job\Softwares\VisualStudioCode-ws1\Sel_CSharp002\NewZeaLand\obj\Debug\NewZeaLand.csproj.CoreCompileInputs.cache
+C:\Users\HI\My_Items\Job\Softwares\VisualStudioCode-ws1\Sel_CSharp002\NewZeaLand\obj\Debug\NewZeaLand.csproj.CopyComplete
+C:\Users\HI\My_Items\Job\Softwares\VisualStudioCode-ws1\Sel_CSharp002\NewZeaLand\obj\Debug\NewZeaLand.dll
+C:\Users\HI\My_Items\Job\Softwares\VisualStudioCode-ws1\Sel_CSharp002\NewZeaLand\obj\Debug\NewZeaLand.pdb

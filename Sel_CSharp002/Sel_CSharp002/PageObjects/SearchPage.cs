@@ -32,7 +32,7 @@ namespace Sel_CSharp002.PageObjects
         public ResultPage Mohsin16()
         {
             Thread.Sleep(3000);
-            SearchBox.SendKeys("Selenium C# tutorials by bakkapa");
+            SearchBox.SendKeys("Selenium C# tutorials by bakkappa N");
             SearchButton.Click();
             return new ResultPage(driver);
 

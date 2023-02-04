@@ -15,7 +15,7 @@ namespace Sel_CSharp002.BaseClass
         [OneTimeSetUp]
         public void oneTimeSetUp()
         {   //For LinkedIn
-            /*driver = new ChromeDriver();// You can also provide .exe path in param
+            /*driver = new ChromeDriver();// You can also provide .exe path in param but its optional
             driver.Url = "https://www.linkedin.com/";// ir diver.Navigate().goToURL(""); driver.Navigate().refresh();//.back();forward();*/
             //http://www.uitestingplayground.com/
             //For LinkedIn diff method
