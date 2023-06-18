@@ -40,6 +40,7 @@ namespace KarthikProj
             //Object ob = null;
             //Console.WriteLine(ob);
             #endregion
+
             //implementation of delegate
             //PV p = (msg) => { Console.WriteLine(msg); };
             //p("perform delgate implementation");
@@ -51,7 +52,29 @@ namespace KarthikProj
             //object0.getStudName();
 
             //This is a copy of master branch
-            String.Concat("Master", "feature add on");
+            //String.Concat("Master", "feature add on");
+
+            //try
+            //{
+            //    String FN = "2480";
+            //    int Rank = int.Parse(FN);
+            //    int RankDup = Convert.ToInt32(FN);
+            //}
+            //catch (Exception)
+            //{
+            //    Console.WriteLine("Can't convert into integer");
+            //}
+
+            //var numbers = new List<int>() { 1, 0, 5, 63, 89, 7, 10 };
+            //var smallest = GetNumbers(numbers, 3);
+            //foreach (var e in smallest) Console.WriteLine(e);
+
+            //var P = new Person();
+            //P.parse("Joey");
+            //P.Introduce("Blue shields");
+
+            obj2.Add(1, 2, 4, 56, 23);
+
             Console.Read();
         }
 
@@ -236,8 +259,29 @@ namespace KarthikProj
         
         
         #endregion
+        
+        public static List<int> GetNumbers(List<int> li,int count)
+        {
+            List<int> temp = new List<int>();
+            li.Sort();
+            for (int i = 0; i < count; i++)
+            {
+                temp.Add(li.ElementAt(i));
+            }
+            return temp;
+        }
+        public int Add(params int[] Arr)// using params works similar to spread operator in JS/java
+        {
+            return Arr.Length;
+        }
+        public T Max<T>(T a,T b) where T:IComparable //Here i defined generic method that has generic which extends IComparable
+        {
+            return a.CompareTo(b) > 0 ? a : b;
+        }
 
-
+        List<String> names = new List<String>() { "Joey", "chandler", "Rachel", "monica", "ross", "phoebe" };
+        
+  
     }
     public class User
     {

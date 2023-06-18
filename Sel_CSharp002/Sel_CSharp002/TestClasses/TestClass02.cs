@@ -19,14 +19,16 @@ namespace Sel_CSharp002
         public void setUp()
         {
             Console.WriteLine("insideSetUp");
-            driver = new ChromeDriver();
+            string path = @"C:\Users\HI\My_Items\Job\Softwares\Jar Files\Browser Drivers\chromedriver.exe";
+            driver = new ChromeDriver(path);
             
-            driver.Navigate().GoToUrl("http://fast.com/");
+            driver.Navigate().GoToUrl("https://eviltester.github.io/supportclasses/");
             driver.Manage().Window.Maximize();
             //http://www.uitestingplayground.com/ ; 
             //https://www.toolsqa.com/iframe-practice-page
             //https://www.seleniumeasy.com/test/basic-first-form-demo.html
             //https://my.asos.com/identity/register
+            //https://eviltester.github.io/supportclasses/
             
         }
 

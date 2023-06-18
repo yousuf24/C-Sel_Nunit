@@ -50,7 +50,6 @@ C:\Users\HI\My_Items\Job\Softwares\VisualStudioCode-ws1\Sel_CSharp002\Sel_CSharp
 C:\Users\HI\My_Items\Job\Softwares\VisualStudioCode-ws1\Sel_CSharp002\Sel_CSharp002\bin\Debug\System.Text.Encoding.CodePages.xml
 C:\Users\HI\My_Items\Job\Softwares\VisualStudioCode-ws1\Sel_CSharp002\Sel_CSharp002\bin\Debug\System.ValueTuple.xml
 C:\Users\HI\My_Items\Job\Softwares\VisualStudioCode-ws1\Sel_CSharp002\Sel_CSharp002\bin\Debug\System.Web.Razor.xml
-C:\Users\HI\My_Items\Job\Softwares\VisualStudioCode-ws1\Sel_CSharp002\Sel_CSharp002\obj\Debug\Sel_CSharp002.csproj.AssemblyReference.cache
 C:\Users\HI\My_Items\Job\Softwares\VisualStudioCode-ws1\Sel_CSharp002\Sel_CSharp002\obj\Debug\Sel_CSharp002.csproj.ResolveComReference.cache
 C:\Users\HI\My_Items\Job\Softwares\VisualStudioCode-ws1\Sel_CSharp002\Sel_CSharp002\obj\Debug\Sel_CSharp002.csproj.CoreCompileInputs.cache
 C:\Users\HI\My_Items\Job\Softwares\VisualStudioCode-ws1\Sel_CSharp002\Sel_CSharp002\obj\Debug\Sel_CSharp002.csproj.CopyComplete
