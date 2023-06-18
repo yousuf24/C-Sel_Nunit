@@ -427,8 +427,176 @@ namespace Sel_CSharp002.BaseClass
                 throw;
             }return IsSelected;
         }
-        //ToResume
+        public bool SelectContains(By Ele, String Optiontxt)
+        {
+            bool IsSelected = false;
+            try
+            {
+                SelectElement drpdown = new SelectElement(LoadWebElement(Ele));
+                WaitTillOptionsLoaded(Ele,10);
 
+                string txt = drpdown.Options.AsEnumerable().Where(x => x.Text.Contains(Optiontxt)).Select(x => x.Text).First();
+                drpdown.SelectByText(txt);
+                IsSelected = true;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return IsSelected;
+        }
+        public bool SelectByIndex(IWebElement Wele,int index)
+        {
+            bool IsSelected = false;
+            try
+            {
+                SelectElement drp = new SelectElement(Wele);
+                WaitTillOptionsLoaded(Wele,10);
+                drp.SelectByIndex(index);
+                IsSelected = true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }return IsSelected;
+        }
+        public bool SelectByIndex(By Ele, int index)
+        {
+            bool IsSelected = false;
+            try
+            {
+                SelectElement drp = new SelectElement(LoadWebElement(Ele));
+                WaitTillOptionsLoaded(LoadWebElement(Ele), 10);
+                drp.SelectByIndex(index);
+                IsSelected = true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return IsSelected;
+        }
+        public string SelectedOption(By Ele)
+        {
+            string str = string.Empty;
+            try
+            {
+                SelectElement se = new SelectElement(LoadWebElement(Ele));
+                str=se.SelectedOption.Text;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }return str;
+        }
+        public void DeselectAll(By Ele)
+        {
+            try
+            {
+                SelectElement se = new SelectElement(LoadWebElement(Ele));
+                WaitTillOptionsLoaded(LoadWebElement(Ele), 10);
+                se.DeselectAll();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public List<String> GetAllOptionsText(By Ele)
+        {
+            List<String> strOptions = new List<String>();
+            try
+            {
+                SelectElement drp = new SelectElement(LoadWebElement(Ele));
+                strOptions=drp.Options.Select(x => x.Text).ToList();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }return strOptions;
+        }
+        #endregion
+
+        #region Verification functions
+        public bool VerifyElemExists(IWebElement Wele,bool IsExpected)
+        {
+            bool Status = false;
+            try
+            {
+                if(IsExpected)
+                    Status =ElementDisplayed(Wele); 
+                
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }return Status;
+        }
+        public bool VerifyElemExists(By Ele, bool IsExpected)
+        {
+            bool Status = false;
+            try
+            {
+                if (IsExpected)
+                    Status = ElementDisplayed(LoadWebElement(Ele));
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return Status;
+        }
+        public bool VerifyAllOptionExistInDropDown(By Ele,List<String> strOptions)
+        {
+            bool Status = false;
+            try
+            {
+                SelectElement se = new SelectElement(LoadWebElement(Ele));
+                if (strOptions.Count == se.Options.Count)
+                {
+                    foreach(string Option in strOptions)
+                    {
+                        /ToDO:
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }return Status;
+        }
+        public bool VerifyValueExistsinDrpDown(By Ele,string strToSearch)
+        {
+            bool IsExist = false;
+            try
+            {
+                SelectElement se = new SelectElement(LoadWebElement(Ele));
+                if (se != null)
+                {
+                    List<String> strOptionsActual=se.Options.Select(x => x.Text).ToList();
+                    strOptionsActual = strOptionsActual.Where(x => !string.IsNullOrWhiteSpace(x)).Distinct().ToList();
+                    strToSearch=strToSearch.Trim();
+                    IsExist = (strOptionsActual.Any(x => x.Trim().Contains(strToSearch)));
+                }
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }return IsExist;
+        }
         #endregion
 
 
@@ -443,7 +611,7 @@ namespace Sel_CSharp002.BaseClass
 
 
         #region Wait Functions
-       public bool WaitTillOptionsLoaded(IWebElement Wele,int TimeOut,int MinOptionCount)
+        public bool WaitTillOptionsLoaded(IWebElement Wele,int TimeOut,int MinOptionCount=0)
         {
             bool IsLoaded = false;
             try
@@ -468,6 +636,34 @@ namespace Sel_CSharp002.BaseClass
 
                 throw;
             }return IsLoaded;
+
+        }
+        public bool WaitTillOptionsLoaded(By Ele, int TimeOut, int MinOptionCount = 0)
+        {
+            bool IsLoaded = false;
+            try
+            {
+                SelectElement drp = new SelectElement(LoadWebElement(Ele));
+                WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeOut));
+                wait.Until(d => {
+                    try
+                    {
+                        return drp.Options.Count > MinOptionCount;
+                    }
+                    catch (Exception)
+                    {
+
+                        throw;
+                    }
+                });
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return IsLoaded;
 
         }
         public bool WaitTillVisible(By Ele,int TimeOut = 60)
@@ -533,6 +729,149 @@ namespace Sel_CSharp002.BaseClass
             } while (!IsLoaded);
             return IsLoaded;
         }
+        public bool ElementDisplayed(IWebElement Wele,bool IsExpected=true)
+        {
+            bool Status = false;
+            try
+            {
+                if (Wele != null)
+                {
+                    if (Wele.Displayed && IsExpected) Status = true;
+                    else if (!Wele.Displayed && !IsExpected) Status = true;
+                    else if (Wele.Displayed && !IsExpected) Status = false;
+                    else if (!Wele.Displayed && IsExpected) Status = false;
+                }
+                else
+                {
+                    if (IsExpected) Status = false;
+                    else if (!IsExpected) Status = true;
+                }
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }return Status;
+
+        }
+        public bool ElementDisplayed(By Ele, bool IsExpected = true)
+        {
+            bool Status = false;
+            try
+            {
+                IWebElement Wele=LoadWebElement(Ele);
+                    if (Wele.Displayed && IsExpected) Status = true;
+                    else if (!Wele.Displayed && !IsExpected) Status = true;
+                    else if (Wele.Displayed && !IsExpected) Status = false;
+                    else if (!Wele.Displayed && IsExpected) Status = false;
+                
+                
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return Status;
+
+        }
+        public bool ElementDisplayed(How how,string locator, bool IsExpected = true)
+        {
+            bool Status = false;
+            try
+            {
+                IWebElement Wele = LoadWebElement(how,locator);
+                if (Wele.Displayed && IsExpected) Status = true;
+                else if (!Wele.Displayed && !IsExpected) Status = true;
+                else if (Wele.Displayed && !IsExpected) Status = false;
+                else if (!Wele.Displayed && IsExpected) Status = false;
+
+
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return Status;
+
+        }
+        #endregion
+
+        #region Field Justification
+        public bool IsFieldRequired(IWebElement Wele,bool NeedToFill)
+        {
+            if (NeedToFill)
+                return IsMandtoryFieldiLr(Wele);
+            else
+                return ElementDisplayed(Wele) ? true:false;
+        }
+        public bool IsMandtoryFieldiLr(By Ele)
+        {
+            bool IsR = false;
+            try
+            {
+                IWebElement Wele=LoadWebElement(Ele);
+                IsR = ElementDisplayed(Wele) ? Wele.GetAttribute("class").Contains("input-validation-error") : false;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }return IsR;
+        }
+        public bool IsMandtoryFieldiLr(IWebElement Wele)
+        {
+            bool IsR = false;
+            try
+            {
+                
+                IsR = ElementDisplayed(Wele) ? Wele.GetAttribute("class").Contains("input-validation-error") : false;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return IsR;
+        }
+        public bool IsTextbox(By Ele)
+        {
+            bool IsTb = false;
+            try
+            {
+                IWebElement Wele=LoadWebElement(Ele);
+                IsTb=Wele != null ? Wele.TagName.Equals("input", StringComparison.OrdinalIgnoreCase) : false;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }return IsTb;
+        }
+        public bool IsDateField(By Ele)
+        {
+            bool IsTb = false;
+            try
+            {
+                IWebElement Wele = LoadWebElement(Ele);
+                IsTb = Wele != null ? Wele.GetAttribute("class").Contains("date") : false;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return IsTb;
+        }
+
         #endregion
 
         #region Extra
