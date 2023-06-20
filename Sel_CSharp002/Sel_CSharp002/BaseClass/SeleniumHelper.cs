@@ -365,7 +365,7 @@ namespace Sel_CSharp002.BaseClass
                 throw;
             }return IsEntered;
         }
-        public bool TextEnter(By Ele, string txt,int TimeOut)
+        public bool TextEnter(By Ele, string txt,int TimeOut=60)
         {
             bool IsEntered = false;
             try
@@ -562,11 +562,13 @@ namespace Sel_CSharp002.BaseClass
             try
             {
                 SelectElement se = new SelectElement(LoadWebElement(Ele));
+                List<String> Actual=se.Options.Select(x => x.Text).Distinct().ToList();
                 if (strOptions.Count == se.Options.Count)
                 {
                     foreach(string Option in strOptions)
                     {
-                        /ToDO:
+                       Status= Actual.Any(x => x.Trim().Contains(Option));
+                        if (!Status) break;
                     }
                 }
             }
@@ -576,6 +578,28 @@ namespace Sel_CSharp002.BaseClass
                 throw;
             }return Status;
         }
+        public bool VerifyAllOptionExistInDropDown(IWebElement Wele, List<String> strOptions)
+        {
+            bool Status = false;
+            try
+            {
+                SelectElement se = new SelectElement(Wele);
+                if (strOptions.Count == se.Options.Count)
+                {
+                    foreach (string Option in strOptions)
+                    {
+                        VerifyValueExistsinDrpDown(Wele, Option);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return Status;
+        }
+
         public bool VerifyValueExistsinDrpDown(By Ele,string strToSearch)
         {
             bool IsExist = false;
@@ -597,6 +621,84 @@ namespace Sel_CSharp002.BaseClass
                 throw;
             }return IsExist;
         }
+        public bool VerifyValueExistsinDrpDown(IWebElement Wele, string strToSearch)
+        {
+            bool IsExist = false;
+            try
+            {
+                SelectElement se = new SelectElement(Wele);
+                if (se != null)
+                {
+                    List<String> strOptionsActual = se.Options.Select(x => x.Text).ToList();
+                    strOptionsActual = strOptionsActual.Where(x => !string.IsNullOrWhiteSpace(x)).Distinct().ToList();
+                    strToSearch = strToSearch.Trim();
+                    IsExist = (strOptionsActual.Any(x => x.Trim().Contains(strToSearch)));
+                }
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return IsExist;
+        }
+        #endregion
+
+        #region Attribute functions
+        public string GetElementAttributeValue(IWebElement W,string strAtt)
+        {
+            string str = string.Empty;
+            try
+            {
+                if(W!=null)
+                    str=W.GetAttribute(strAtt);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }return str;
+    
+        }
+        public string GetElementAttributeValue(By W, string strAtt)
+        {
+            string str = string.Empty;
+            try
+            {
+                if (W != null)
+                    str = LoadWebElement(W).GetAttribute(strAtt);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return str;
+
+        }
+        public void SetAttribute(IWebElement Wele,string strAttrName,string strValue)
+        {
+            var jsExec = (IJavaScriptExecutor)Driver;
+            jsExec.ExecuteScript("arguments[0].setAttribute(arguments[1],arguments[2])", Wele, strAttrName, strValue);
+        }
+        public void SetAttribute(By Ele, string strAttrName, string strValue)
+        {
+            var jsExec = (IJavaScriptExecutor)Driver;
+            jsExec.ExecuteScript("arguments[0].setAttribute(arguments[1],arguments[2])", Ele, strAttrName, strValue);
+        }
+        public void RemoveAttribute(IWebElement Ele, string strAttrName, string strValue)
+        {
+            var jsExec = (IJavaScriptExecutor)Driver;
+            jsExec.ExecuteScript("arguments[0].removeAttribute(arguments[1])", Ele, strAttrName);
+        }
+        public void RemoveAttribute(By Ele, string strAttrName, string strValue)
+        {
+            var jsExec = (IJavaScriptExecutor)Driver;
+            jsExec.ExecuteScript("arguments[0].removeAttribute(arguments[1])", Ele, strAttrName);
+        }
         #endregion
 
 
@@ -611,6 +713,181 @@ namespace Sel_CSharp002.BaseClass
 
 
         #region Wait Functions
+        public bool WaitTillExists(How how, string loc, int TimeOut = 60)
+        {
+            bool St = false;
+            try
+            {
+                WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeOut));
+                wait.Until(ExpectedConditions.ElementExists(LoadElementBy(how, loc)));
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }return St;
+        }
+        public bool WaitTillExists(By E, int TimeOut = 60)
+        {
+            bool St = false;
+            try
+            {
+                WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeOut));
+                wait.Until(ExpectedConditions.ElementExists(E));
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return St;
+        }
+        public bool WaitTillPresenceOf(How how, string loc, int TimeOut = 60)
+        {
+            bool St = false;
+            try
+            {
+                WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeOut));
+                wait.Until(ExpectedConditions.PresenceOfAllElementsLocatedBy(LoadElementBy(how, loc)));
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return St;
+        }
+        public bool WaitTillPresenceOf(By loc, int TimeOut = 60)
+        {
+            bool St = false;
+            try
+            {
+                WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeOut));
+                wait.Until(ExpectedConditions.PresenceOfAllElementsLocatedBy(loc));
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return St;
+        }
+        public bool WaitTillVisible(How how, string loc, int TimeOut = 60)
+        {
+            bool St = false;
+            try
+            {
+                WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeOut));
+                wait.Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(LoadElementBy(how, loc)));
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return St;
+        }
+        public bool WaitTillVisible(By loc, int TimeOut = 60)
+        {
+            bool St = false;
+            try
+            {
+                WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeOut));
+                wait.Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(loc));
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return St;
+        }
+        public bool WaitTillClickable(How how, string loc, int TimeOut = 60)
+        {
+            bool St = false;
+            try
+            {
+                WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeOut));
+                wait.Until(ExpectedConditions.ElementToBeClickable(LoadElementBy(how, loc)));
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return St;
+        }
+        public bool WaitTillClickable(By loc, int TimeOut = 60)
+        {
+            bool St = false;
+            try
+            {
+                WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeOut));
+                wait.Until(ExpectedConditions.ElementToBeClickable(loc));
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return St;
+        }
+        public bool WaitTillClickable(IWebElement loc, int TimeOut = 60)
+        {
+            bool St = false;
+            try
+            {
+                WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeOut));
+                wait.Until(ExpectedConditions.ElementToBeClickable(loc));
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return St;
+        }
+        public bool WaitTillText(IWebElement loc,string strEx, int TimeOut = 60)
+        {
+            bool St = false;
+            try
+            {
+                WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeOut));
+                wait.Until(ExpectedConditions.TextToBePresentInElement(loc,strEx));
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return St;
+        }
+        public bool WaitTillText(By loc, string strEx, int TimeOut = 60)
+        {
+            bool St = false;
+            try
+            {
+                WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeOut));
+                wait.Until(ExpectedConditions.TextToBePresentInElementLocated(loc, strEx));
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return St;
+        }
         public bool WaitTillOptionsLoaded(IWebElement Wele,int TimeOut,int MinOptionCount=0)
         {
             bool IsLoaded = false;
@@ -666,23 +943,7 @@ namespace Sel_CSharp002.BaseClass
             return IsLoaded;
 
         }
-        public bool WaitTillVisible(By Ele,int TimeOut = 60)
-        {
-            bool IsVisible = false;
-            try
-            {
-                WaitForPageToLoad();
-                WebDriverWait wait=new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeOut));
-                wait.Until(ExpectedConditions.ElementIsVisible(Ele));
-                IsVisible = true;
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-            return IsVisible;
-        }
+        
         public bool WaitTillNotVisible(By Ele, int TimeOut = 60)
         {
             bool IsVisible = false;
@@ -799,6 +1060,137 @@ namespace Sel_CSharp002.BaseClass
             return Status;
 
         }
+        public bool WaitTillTextBoxNotEmpty(IWebElement W,int Timeout = 60)
+        {
+            bool S = false;
+            try
+            {
+                WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(Timeout));
+                wait.Until < Boolean>(d =>
+                {
+                    try
+                    {
+                        return GetElementAttributeValue(W, "value").Length != 0;
+                    }
+                    catch (Exception)
+                    {
+
+                        return false;
+                    }
+                });
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }return S;
+        }
+        public bool WaitTillTextBoxNotEmpty(By W, int Timeout = 60)
+        {
+            bool S = false;
+            try
+            {
+                WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(Timeout));
+                wait.Until<Boolean>(d =>
+                {
+                    try
+                    {
+                        return GetElementAttributeValue(W, "value").Length != 0;
+                    }
+                    catch (Exception)
+                    {
+
+                        return false;
+                    }
+                });
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return S;
+        }
+        #endregion
+
+        #region Extract textFromUI
+        public string GetElementText(How how,string Loc, int TimeOut = 60)
+        {
+            string str = string.Empty;
+            try
+            {
+                WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeOut));
+                By Ele = LoadElementBy(how,Loc);
+                wait.Until(ExpectedConditions.ElementExists(Ele));
+                wait.Until(ExpectedConditions.ElementIsVisible(Ele));
+                str = LoadWebElement(Ele).Text;
+                str = string.IsNullOrEmpty(str) ? GetElementAttributeValue(Ele, "innerText") : str;
+                str = string.IsNullOrEmpty(str) ? GetElementAttributeValue(Ele, "value") : str;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return str;
+        }
+        public string GetElementText(By Ele,int TimeOut = 60)
+        {
+            string str = string.Empty;
+            try
+            {
+                WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeOut));
+                wait.Until(ExpectedConditions.ElementExists(Ele));
+                wait.Until(ExpectedConditions.ElementIsVisible(Ele));
+                str=LoadWebElement(Ele).Text;
+                str = string.IsNullOrEmpty(str) ? GetElementAttributeValue(Ele, "innerText") : str;
+                str = string.IsNullOrEmpty(str) ? GetElementAttributeValue(Ele, "value") : str;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }return str;
+        }
+        public string ExtractCellValueFromTable(By Ele,int r,int c)
+        {
+            string str = string.Empty;
+            try
+            {
+                if (Ele != null)
+                {
+                    IList<IWebElement> tblRows=LoadCollectionOfWebElements(Ele, By.TagName("tr"));
+                    str=tblRows.ElementAt(r).FindElements(By.TagName("td"))[c-1].Text;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }return str;
+        }
+        public string ExtractCellValueFromTable(IWebElement Ele, int r, int c)
+        {
+            string str = string.Empty;
+            try
+            {
+                if (Ele != null)
+                {
+                    IList<IWebElement> tblRows = LoadCollectionOfWebElements(Ele, By.TagName("tr"));
+                    str = tblRows.ElementAt(r).FindElements(By.TagName("td"))[c - 1].Text;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return str;
+        }
         #endregion
 
         #region Field Justification
@@ -875,6 +1267,116 @@ namespace Sel_CSharp002.BaseClass
         #endregion
 
         #region Extra
+        public bool UploadDocuments(By Ele,string strPath,int TimeOut=60)
+        {
+            bool IsStatus = true;
+            try
+            {
+                LoadWebElement(Ele).SendKeys(strPath);
+                IsStatus = true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }return IsStatus;
+        }
+        public bool WaitForUrlContains(string str,int TimeOut=60)
+        {
+            bool IsStatus = false;
+            try
+            {
+                WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeOut));
+                wait.Until(ExpectedConditions.UrlContains(str));
+                IsStatus = true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }return IsStatus;
+        }
+        public bool WaitForUrlMatchesRegex(string str, int TimeOut=60)
+        {
+            bool IsStatus = false;
+            try
+            {
+                WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeOut));
+                wait.Until(ExpectedConditions.UrlMatches(str));
+                IsStatus = true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return IsStatus;
+        }
+        public bool OpenUrl(string strUrl)
+        {
+            try
+            {
+                Driver.Navigate().GoToUrl(strUrl);
+                return true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public void SwitchToLatestTab()
+        {
+            Driver.SwitchTo().Window(Driver.WindowHandles.Last());
+        }
+        public void SwitchToFirstTab()
+        {
+            Driver.SwitchTo().Window(Driver.WindowHandles.First());
+        }
+        public bool SwitchFrame(int index)
+        {
+            bool IsTrue = false;
+            try
+            {
+                Driver.SwitchTo().Frame(index);
+                IsTrue = true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }return IsTrue;
+        }
+        public bool SwitchFrame(By Ele)
+        {
+            bool IsTrue = false;
+            try
+            {
+                WaitTillVisible(Ele);
+                Driver.SwitchTo().Frame(LoadWebElement(Ele));
+                IsTrue = true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return IsTrue;
+
+        }
+        public bool SwitchToDefaultFrame()
+        {
+            try
+            {
+                Driver.SwitchTo().DefaultContent();
+                return true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         public bool JavaExecutor(string script)
         {
             bool Success = false;
@@ -890,6 +1392,22 @@ namespace Sel_CSharp002.BaseClass
                 throw;
             }return Success;
         }
+        public bool JavaExecutor(string script,string param)
+        {
+            bool Success = false;
+            try
+            {
+                ((IJavaScriptExecutor)Driver).ExecuteScript(script,param);
+                Success = true;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return Success;
+        }
         public void AlertAccept()
             {
                 try
@@ -902,9 +1420,140 @@ namespace Sel_CSharp002.BaseClass
                     throw e;
                 }
             }
+        public IWebElement JavaExecutorshadowDom(string strJQuery)
+        {
+            IWebElement Wele = null;
+            try
+            {
+                var js=((IJavaScriptExecutor)Driver);
+                Wele=(IWebElement)js.ExecuteScript("return" + strJQuery);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }return Wele;
+        }
+        public bool JavaExecutor(string strScript,IWebElement Wele)
+        {
+            bool S = true;
+            try
+            {
+                ((IJavaScriptExecutor)Driver).ExecuteScript(strScript, Wele);S = true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }return S;
+        }
+        public bool JavaExecutor(string strScript, By Wele)
+        {
+            bool S = true;
+            try
+            {
+                ((IJavaScriptExecutor)Driver).ExecuteScript(strScript, Wele); S = true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return S;
+        }
+        public bool JavaExecutor(string strScript, By Wele,string txt)
+        {
+            bool S = true;
+            try
+            {
+                ((IJavaScriptExecutor)Driver).ExecuteScript(strScript, Wele,txt); S = true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return S;
+        }
+        public void DisposeDriverAlone()
+        {
+            try
+            {
+                Driver.Close();
+                Driver.Dispose();
+                Driver.Quit();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public bool OpenInANewTab(IWebElement Wele)
+        {
+            bool Is = false;
+            try
+            {
+                Actions _actions=InitializeActions();
+                _actions.KeyDown(Keys.Control).Click(Wele).KeyUp(Keys.Control).Build().Perform();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }return Is;
+        }
+        public bool OpenInANewTab(By Ele)
+        {
+            bool Is = false;
+            try
+            {
+                Actions _actions = InitializeActions();
+                _actions.KeyDown(Keys.Control).Click(LoadWebElement(Ele)).KeyUp(Keys.Control).Build().Perform();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return Is;
+        }
+        public void OpenNewTab()
+        {
+            try
+            {
+                JavaExecutor("window.open()");
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public String GetCurrentURL()
+        {
+            string str = string.Empty;
+            try
+            {
+                str = Driver.Url;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }return str;
+        }
+        public void SetCurrentDate(By Ele)
+        {
+            WaitTillVisible(Ele);
+            TextEnter(Ele, DateTime.Now.ToString("MM/dd/yyyy"));
+
+        }
+
         #endregion
-        
-        
-        
+
+
+
     }
 }
