@@ -6,9 +6,7 @@ using SeleniumExtras.WaitHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Sel_CSharp002.BaseClass
 {
@@ -1553,7 +1551,336 @@ namespace Sel_CSharp002.BaseClass
 
         #endregion
 
+        #region Mouse Actions
+        public void RightClick(IWebElement Wele)
+        {
+            Actions _actions=InitializeActions();
+            _actions.MoveToElement(Wele).ContextClick().Build().Perform();
+        }
+        public void RightClick(By Wele)
+        {
+            Actions _actions = InitializeActions();
+            _actions.MoveToElement(LoadWebElement(Wele)).ContextClick().Build().Perform();
+        }
+        #endregion
 
+        #region Window functions
+        public void MaximizeWindow()
+        {
+            Driver.Manage().Window.Maximize();
+        }
+        public bool SwitchWindow(string window)
+        {
+            bool Is = false;
+            try
+            {
+                if (!Driver.Title.Equals(window))
+                {
+                    foreach (var handle in Driver.WindowHandles)
+                    {
+                        IWebDriver popup = Driver.SwitchTo().Window(handle);
+                        if (popup.Title.Trim().Equals(window))
+                        {
+                            Is = true;
+                            break;
+
+                        }
+                            
+                    }
+                    {
+
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }return Is;
+
+        }
+        public bool CloseWindowByTitle(string strTitle)
+        {
+            bool Is = false;
+            try
+            {
+                
+                
+                    foreach (var handle in Driver.WindowHandles)
+                    {
+                        IWebDriver popup = Driver.SwitchTo().Window(handle);
+                        if (popup.Title.Trim().Equals(strTitle))
+                        {
+                            Is = true;
+                            Driver.Close();
+                            break;
+
+                        }
+
+                    }
+                    {
+
+                    }
+               
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return Is;
+        }
+        public void CloseChildWindow(string ParentWindow)
+        {
+            try
+            {
+                if (SwitchWindow(ParentWindow))
+                {
+                    foreach (var handle in Driver.WindowHandles)
+                    {
+                        SwitchWindow(handle);
+                        if (!Driver.Title.Trim().Equals(ParentWindow))
+                        {
+                            Driver.Close();
+
+                        }
+                    }
+                    {
+
+                    }
+                }
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+
+        #endregion
+
+        #region AlertFunctions
+        public string AcceptAlertAndGetItsText()
+        {
+            string str = String.Empty;
+            try
+            {
+                IAlert alert = Driver.SwitchTo().Alert();
+                str=alert.Text;
+                alert.Accept();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }return str;
+        }
+        #endregion
+
+        #region Mouse Hover
+        public bool MouseOverOnElement(By Ele,int TimeOut = 60)
+        {
+            bool Is = false;
+            Actions _actions=InitializeActions();
+            try
+            {
+                WaitForPageToLoad();
+                WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeOut));
+                wait.Until(ExpectedConditions.ElementExists(Ele));
+                wait.Until(ExpectedConditions.ElementIsVisible(Ele));
+                IWebElement W=LoadWebElement(Ele);
+                _actions.MoveToElement(W).Build().Perform();
+                Is = true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }return Is;
+
+        }
+        public bool MouseOverOnElementAndClickSubElement(By Ele,By Ele2, int TimeOut = 60)
+        {
+            bool Is = false;
+            Actions _actions = InitializeActions();
+            try
+            {
+                WaitForPageToLoad();
+                WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeOut));
+                wait.Until(ExpectedConditions.ElementExists(Ele));
+                wait.Until(ExpectedConditions.ElementIsVisible(Ele));
+                IWebElement W = LoadWebElement(Ele);
+                _actions.MoveToElement(W).Perform();
+
+                WaitForPageToLoad();
+                wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeOut));
+                wait.Until(ExpectedConditions.ElementExists(Ele2));
+                wait.Until(ExpectedConditions.ElementIsVisible(Ele2));
+                wait.Until(ExpectedConditions.ElementToBeClickable(Ele2));
+                W = LoadWebElement(Ele2);
+                _actions.MoveToElement(W);
+                _actions.Click().Build().Perform();
+                Is = true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return Is;
+
+        }
+        public bool MouseOverOnElementAndClick(By Ele, By Ele2, int TimeOut = 60)
+        {
+            bool Is = false;
+            Actions _actions = InitializeActions();
+            try
+            {
+                WaitForPageToLoad();
+                WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeOut));
+                wait.Until(ExpectedConditions.ElementExists(Ele));
+                wait.Until(ExpectedConditions.ElementIsVisible(Ele));
+                wait.Until(ExpectedConditions.ElementToBeClickable(Ele));
+                IWebElement W = LoadWebElement(Ele);
+                _actions.MoveToElement(W);
+                _actions.Click().Build().Perform();
+                Is = true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return Is;
+
+        }
+        #endregion
+
+        #region SnapShot
+        public bool SaveSnapShot(string strPath)
+        {
+            bool Is = false;
+            try
+            {
+                ((ITakesScreenshot)Driver).GetScreenshot().SaveAsFile(strPath,ScreenshotImageFormat.Png);
+                Is = true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }return Is;
+        }
+        #endregion
+
+        #region Scrolling
+        public bool MovePopupScrollBasedOnElement(IWebElement Wele)
+        {
+            bool Is = false;
+            try
+            {
+                JavaExecutor("arguments[0].scrollIntoView();", Wele);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }return Is;
+        }
+        public bool MovePopupScrollBasedOnElement(By Wele,int TimeOut=60)
+        {
+            bool Is = false;
+            try
+            {
+                WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeOut));
+                wait.Until(ExpectedConditions.ElementExists(Wele));
+                JavaExecutor("arguments[0].scrollIntoView();", LoadWebElement(Wele));
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return Is;
+        }
+        public bool ScrollTillPixel(int pixel)
+        {
+            bool Is = false;
+            try
+            {
+                WaitForPageToLoad();
+                JavaExecutor($"window.scrollTo(0,{pixel});");
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }return Is;
+        }
+        public bool ScrollTillBottom()
+        {
+            bool Is = false;
+            try
+            {
+                JavaExecutor("window.scrollTo(0,document.body.scrollHeight-150)");
+                Is = true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }return Is;
+        }
+        public bool HorizontalScrolling(By Ele,int pixel = 250)
+        {
+            bool Is = false;
+            try
+            {
+                JavaExecutor("window.scrollTo(0,document.body.scrollHeight)");
+                JavaExecutor($"arguments[0].scrollLeft+={pixel}", LoadWebElement(Ele));
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }return Is;
+        }
+        #endregion
+
+        #region KeyBoard Actions
+        public bool PressArrDownKey(By Ele)
+        {
+            bool Is = false;
+            try
+            {
+                LoadWebElement(Ele).SendKeys(Keys.ArrowDown);
+                Is = true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }return Is;
+        }
+        public bool PressArrUpKey(By Ele)
+        {
+            bool Is = false;
+            try
+            {
+                LoadWebElement(Ele).SendKeys(Keys.ArrowUp);
+                Is = true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return Is;
+        }
+        #endregion
 
     }
 }
+

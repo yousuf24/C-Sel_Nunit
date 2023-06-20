@@ -55,3 +55,4 @@ C:\Users\HI\My_Items\Job\Softwares\VisualStudioCode-ws1\Sel_CSharp002\Sel_CSharp
 C:\Users\HI\My_Items\Job\Softwares\VisualStudioCode-ws1\Sel_CSharp002\Sel_CSharp002\obj\Debug\Sel_CSharp002.csproj.CopyComplete
 C:\Users\HI\My_Items\Job\Softwares\VisualStudioCode-ws1\Sel_CSharp002\Sel_CSharp002\obj\Debug\Sel_CSharp002.dll
 C:\Users\HI\My_Items\Job\Softwares\VisualStudioCode-ws1\Sel_CSharp002\Sel_CSharp002\obj\Debug\Sel_CSharp002.pdb
+C:\Users\HI\My_Items\Job\Softwares\VisualStudioCode-ws1\Sel_CSharp002\Sel_CSharp002\obj\Debug\Sel_CSharp002.csproj.AssemblyReference.cache

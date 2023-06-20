@@ -12,15 +12,15 @@ using Sel_CSharp002.PageObjects;
 
 namespace Sel_CSharp002.TestScripts
 {   [TestFixture]
-    class Mk22999_Test0001:PreRequisite
+    class Mk22999_Test0001:BaseSetUpCore //BrowserUtility
     {
 
-               [Test]
+       [Test]
         public void Mohsin16_test()
         {
-            SearchPage Searchpageobj = new SearchPage(driver);
+            /*SearchPage Searchpageobj = new SearchPage(driver);
             var resultPageObj= Searchpageobj.Mohsin16();
-            resultPageObj.toChannel();
+            resultPageObj.toChannel();*/
 
 
 
