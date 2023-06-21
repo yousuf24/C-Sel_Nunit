@@ -194,6 +194,7 @@
     <Compile Include="BaseClass\PreRequisite.cs" />
     <Compile Include="BaseClass\SeleniumHelper.cs" />
     <Compile Include="Constants\ConstantDataField.cs" />
+    <Compile Include="DnD\AppSettingsClient.cs" />
     <Compile Include="FileFolderHelper\FileHelper.cs" />
     <Compile Include="FileFolderHelper\PdfHelper.cs" />
     <Compile Include="FileFolderHelper\WordDocHelper.cs" />
@@ -214,6 +215,7 @@
     <Compile Include="TestClasses\TestClass09.cs" />
     <Compile Include="TestClasses\TestClass10.cs" />
     <Compile Include="TestData\AppSettingsClientConfig.cs" />
+    <Compile Include="TestData\AzureKeyVaults\AzureKeyVaultsVariables.cs" />
     <Compile Include="TestScripts\Mk22999_Test0001.cs" />
     <Compile Include="DnD\UandT.cs" />
     <Compile Include="Utilities\App1.cs" />
