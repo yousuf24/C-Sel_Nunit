@@ -215,6 +215,7 @@
     <Compile Include="TestClasses\TestClass09.cs" />
     <Compile Include="TestClasses\TestClass10.cs" />
     <Compile Include="TestData\AppSettingsClientConfig.cs" />
+    <Compile Include="TestData\AzureKeyVaults\AzureKeyValutsData.cs" />
     <Compile Include="TestData\AzureKeyVaults\AzureKeyVaultsVariables.cs" />
     <Compile Include="TestScripts\Mk22999_Test0001.cs" />
     <Compile Include="DnD\UandT.cs" />
