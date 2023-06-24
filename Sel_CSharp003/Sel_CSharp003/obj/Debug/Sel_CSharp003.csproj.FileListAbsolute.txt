@@ -8,7 +8,6 @@ C:\Users\HI\My_Items\Job\Softwares\VisualStudioCode-ws1\Sel_CSharp003\Sel_CSharp
 C:\Users\HI\My_Items\Job\Softwares\VisualStudioCode-ws1\Sel_CSharp003\Sel_CSharp003\bin\Debug\Sel_CSharp003.pdb
 C:\Users\HI\My_Items\Job\Softwares\VisualStudioCode-ws1\Sel_CSharp003\Sel_CSharp003\bin\Debug\nunit.framework.dll
 C:\Users\HI\My_Items\Job\Softwares\VisualStudioCode-ws1\Sel_CSharp003\Sel_CSharp003\bin\Debug\nunit.framework.xml
-C:\Users\HI\My_Items\Job\Softwares\VisualStudioCode-ws1\Sel_CSharp003\Sel_CSharp003\obj\Debug\Sel_CSharp003.csproj.AssemblyReference.cache
 C:\Users\HI\My_Items\Job\Softwares\VisualStudioCode-ws1\Sel_CSharp003\Sel_CSharp003\obj\Debug\Sel_CSharp003.csproj.CoreCompileInputs.cache
 C:\Users\HI\My_Items\Job\Softwares\VisualStudioCode-ws1\Sel_CSharp003\Sel_CSharp003\obj\Debug\Sel_CSharp003.csproj.CopyComplete
 C:\Users\HI\My_Items\Job\Softwares\VisualStudioCode-ws1\Sel_CSharp003\Sel_CSharp003\obj\Debug\Sel_CSharp003.dll

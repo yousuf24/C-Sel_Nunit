@@ -21,7 +21,7 @@ namespace Sel_CSharp002.BaseClass
             if (_driver == null)
             {
                 BrowserFactoryHelper browFac = new BrowserFactoryHelper();
-                browFac.CreateDriverInstance(browser);
+                _driver=browFac.CreateDriverInstance(browser);
                 _driver.Manage().Window.Size = new Size(1366, 768);
                 _seleniumHelper = new SeleniumHelper(_driver);
                 _fileHelper = new FileHelper();

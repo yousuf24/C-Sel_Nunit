@@ -1,7 +1,10 @@
 ﻿using NUnit.Framework;
+using OpenQA.Selenium;
 using Sel_CSharp002.BaseClass;
+using Sel_CSharp002.PageObjects.LoginPage;
 using Sel_CSharp002.TestData.AzureAppConfig;
 using Sel_CSharp002.TestData.AzureKeyVaults;
+using SeleniumExtras.PageObjects;
 
 namespace Sel_CSharp002.TestScripts
 {
@@ -27,7 +30,7 @@ namespace Sel_CSharp002.TestScripts
             /*SearchPage Searchpageobj = new SearchPage(driver);
             var resultPageObj= Searchpageobj.Mohsin16();
             resultPageObj.toChannel();*/
-
+            SFLoginAsSalesUser();
 
 
 
@@ -36,11 +39,18 @@ namespace Sel_CSharp002.TestScripts
 
         private void SFLoginAsSalesUser()
         {
-            _seleniumHelper.OpenUrl(AppConfigData.salesforceUrl);
-            string UID=KeyValutsData.sftestServiceManagerUserName;
-            string Pwd = KeyValutsData.sftestServiceManagerPassword;
-            System.Console.WriteLine($"UID: {UID} | Password: {Pwd}");
             
+            //string UID=KeyValutsData.sftestServiceManagerUserName;
+            //string Pwd = KeyValutsData.sftestServiceManagerPassword;
+            
+
+            SFLoginPage _sfLoginPage = new SFLoginPage(_seleniumHelper);
+            _sfLoginPage.OpenSFUrl(AppConfigData.salesforceUrl);
+            _sfLoginPage.CheckedRememberMe();
+            _sfLoginPage.EnterCredentialsAndClickLogin("mohammad.yousuf@wolterskluwer.com.ctttest", "Wk@Apr23");
+
+
+
         }
     }
 }
