@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sel_CSharp002.TestData.AzureKeyVaults
 {
-    class AzureKeyVaultsVariables
+    class KeyVaultsVariables
     {
         public const string sectionName = "userCredentials";
         public const string sftestServiceManagerUserName = "sfServiceManagerUserName";

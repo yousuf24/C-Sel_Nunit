@@ -1,18 +1,13 @@
 ﻿using NUnit.Framework;
 using Sel_CSharp002.BaseClass;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenQA.Selenium.Support;
-using OpenQA.Selenium;
-using SeleniumExtras.PageObjects;
-using Sel_CSharp002.PageObjects;
+using Sel_CSharp002.TestData.AzureAppConfig;
+using Sel_CSharp002.TestData.AzureKeyVaults;
 
 namespace Sel_CSharp002.TestScripts
-{   [TestFixture]
-    class Mk22999_Test0001:BaseSetUpCore //BrowserUtility
+{
+    [TestFixture]
+    [Parallelizable]
+    class Mk22999_Test0001 : BaseSetUpCore //BrowserUtility
     {
         [SetUp]
         public void Bm()
@@ -25,7 +20,8 @@ namespace Sel_CSharp002.TestScripts
             _seleniumHelper.DisposeDriverAlone();
             _seleniumHelper = null;
         }
-       [Test]
+        [Test]
+        [Category("Mohsin dope")]
         public void Mohsin16_test()
         {
             /*SearchPage Searchpageobj = new SearchPage(driver);
@@ -33,6 +29,18 @@ namespace Sel_CSharp002.TestScripts
             resultPageObj.toChannel();*/
 
 
+
+
+
+        }
+
+        private void SFLoginAsSalesUser()
+        {
+            _seleniumHelper.OpenUrl(AppConfigData.salesforceUrl);
+            string UID=KeyValutsData.sftestServiceManagerUserName;
+            string Pwd = KeyValutsData.sftestServiceManagerPassword;
+            System.Console.WriteLine($"UID: {UID} | Password: {Pwd}");
+            
         }
     }
 }

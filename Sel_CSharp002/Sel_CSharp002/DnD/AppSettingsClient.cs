@@ -10,6 +10,10 @@ using System.Net.Http;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
+using System.Globalization;
+using Microsoft.AspNetCore.WebUtilities;
+//using UrlCombineLib;
 
 namespace Sel_CSharp002.DnD
 {
@@ -26,25 +30,25 @@ namespace Sel_CSharp002.DnD
             return true;
         }
     }
-    class AppSettingsClient : IAppSettingsClient, ITryAppSettingsClient, ITypeAppSettingsClient
+    public class AppSettingsClient : IAppSettingsClient, ITryAppSettingsClient, ITypeAppSettingsClient
     {
         private readonly IAppSettingsRestClient _restClient;
         private DefaultContext defaultContext;
 
         private IParameterValidator Validator { get; set; } = new ParameterValidator();
 
-        public AppSettingsClient(): this(new DefaultContext())
+        public AppSettingsClient() : this(new DefaultContext())
         {
 
         }
-        public AppSettingsClient(IConfiguration config):this(new DefaultContext(config))
+        public AppSettingsClient(IConfiguration config) : this(new DefaultContext(config))
         {
 
         }
         public AppSettingsClient(IClientContext context)
         {
             _restClient = new AppSettingsRestClient(context);
-            
+
         }
         public AppSettingsClient(IAppSettingsRestClient restClient)
         {
@@ -58,33 +62,79 @@ namespace Sel_CSharp002.DnD
 
         public Task<string> GetAsync(string section, string key)
         {
-            throw new NotImplementedException();
+            return _restClient.GetAsync(section, key);
         }
 
         public Task<string> GetSecretAsync(string secretName, string section = null)
         {
-            throw new NotImplementedException();
+            Validator.VerifyIfNullOrEmpty(secretName, "secretName");
+            return _restClient.GetSecretAsync(secretName, section);
         }
 
         public Task<T> GetSectionAsync<T>(string section)
         {
-            throw new NotImplementedException();
+            Validator.VerifyIfNullOrEmpty(section, "section");
+            return _restClient.GetSectionAsync<T>(section);
         }
 
-        public bool TryGetAsync(string sectionName, string key, string keyValue)
+        public bool TryGetAsync(string sectionName, string key, out string keyValue)
         {
-            throw new NotImplementedException();
+            keyValue = string.Empty;
+            try
+            {
+                keyValue = GetAsync(sectionName, key).Result;
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
         }
 
-        public bool TryGetSecretAsync(string sectionName, string section, out string secret)
+        public bool TryGetSecretAsync(string secretName, string section, out string secret)
         {
-            throw new NotImplementedException();
+            secret = string.Empty;
+            try
+            {
+                secret = GetAsync(secretName, section).Result;
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
         }
 
-        public bool TryGetSectionAsync<T>(string sectionName, out T keyValue)
+        public bool TryGetSectionAsync<T>(string sectionName, out T section)
         {
-            throw new NotImplementedException();
+            section = default(T);
+            try
+            {
+                section = GetSectionAsync<T>(sectionName).Result;
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
         }
+        public Task<T> GetAsync<T>(string section, string key)
+        {
+            T result = default(T);
+            if (TryGetAsync(section, key, out var keyvalue))
+            {
+                result = TryParse<T>(keyvalue);
+            } return Task.FromResult(result);
+        }
+        private static T TryParse<T>(string inValue)
+            {
+            TypeConverter converter = TypeDescriptor.GetConverter(typeof(T));
+            return (T)converter.ConvertFromString(null, CultureInfo.InvariantCulture, inValue);
+            }
+
     }
     public interface IAppSettingsClient: ITryAppSettingsClient, ITypeAppSettingsClient
     {
@@ -94,7 +144,7 @@ namespace Sel_CSharp002.DnD
     }
     public interface ITryAppSettingsClient
     {
-        bool TryGetAsync(string sectionName, string key, string keyValue);
+        bool TryGetAsync(string sectionName, string key, out string keyValue);
         bool TryGetSecretAsync(string sectionName, string section,out string secret);
         bool TryGetSectionAsync<T>(string sectionName, out T keyValue);
     }
@@ -109,7 +159,7 @@ namespace Sel_CSharp002.DnD
         string AppName { get; set; }
         string AppSettingsServiceSubscriptionkey { get; set; }
     }
-    internal class DefaultContext : IClientContext
+    public class DefaultContext : IClientContext
     {
 public string EnvironmentalPrefix { get ; set ; }
         public string AppSettingsServiceUrl { get; set; }
@@ -286,4 +336,82 @@ public class CTException : Exception
     }
 
 
+}
+public class BlobRepository
+{
+    private AppSettingsClient appSettingsClient;
+    private HttpClient httpClient;
+    private string baseURL;
+    private string appName;
+    public BlobRepository(string _appName,AppSettingsClient _appsc)
+    {
+        appName = _appName;
+        appSettingsClient = _appsc;
+        baseURL = appSettingsClient.GetAsync("apiUrls","TestDataServiceUrl").Result;
+        httpClient = new HttpClient();
+    }
+    public T GetData<T>(string fileName="",string testDataSection = "")
+    {
+        string requestUrl=BuildRequestURL(fileName, testDataSection);
+        return ReadResponse<T>(requestUrl);
+    }
+
+    private T ReadResponse<T>(string requestUrl)
+    {
+        T val = default(T);
+        try
+        {
+            HttpResponseMessage result = httpClient.GetAsync(requestUrl).Result;
+            string result2 = result.Content.ReadAsStringAsync().Result;
+            result.EnsureSuccessStatusCode();
+            string value = JsonConvert.DeserializeObject<JObject>(result2)["result"].ToString();
+            return JsonConvert.DeserializeObject<T>(value);
+        }
+        catch (Exception)
+        {
+
+            throw new Exception("Error getting test data");
+        }
+    }
+
+    private string BuildRequestURL(string fileName, string testDataSection)
+    {
+        Dictionary<string, string> queryString = new Dictionary<string, string> 
+        {
+            ["appName"] = appName,
+            ["fileName"] = fileName,
+            ["testDataSection"] = testDataSection
+        };
+        return QueryHelpers.AddQueryString(UrlCombine.Combine(baseURL, "/TestData"), queryString);
+    }
+}
+public static class UrlCombine
+{
+    public static string Combine(string baseUrl,string relativeUrl)
+    {
+        if (string.IsNullOrEmpty(baseUrl))
+        {
+            throw new ArgumentNullException("baseUrl");
+        }
+        if (string.IsNullOrEmpty(relativeUrl))
+        {
+            return baseUrl;
+        }
+        baseUrl = baseUrl.TrimEnd(new char[1] { '/' });
+        relativeUrl = relativeUrl.TrimStart(new char[1] { '/' });
+        return $"{baseUrl}/{relativeUrl}";
+    }
+    public static string Combine(string baseUrl,params string[] relativePaths)
+    {
+        if (string.IsNullOrEmpty(baseUrl))
+        {
+            throw new ArgumentNullException("baseUrl");
+        }
+        if (relativePaths.Length==0)
+        {
+            return baseUrl;
+        }
+        string baseUrl2 = Combine(baseUrl, relativePaths[0]);
+        return Combine(baseUrl2, relativePaths.Skip(1).ToArray());
+    }
 }
