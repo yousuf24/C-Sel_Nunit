@@ -21,7 +21,7 @@ namespace Sel_CSharp002.PageObjects.LoginPage
         #endregion
 
         #region pageElements
-        By tbUserName = By.Id("username");
+        By tbUserName = By.CssSelector("#username");//By.Id("username");
         By tbpassword = By.Id("password");
         By btnLogin = By.XPath("//input[@type='submit']");
         By btnRememberMe = By.XPath("//*[@id='rememberUn']");

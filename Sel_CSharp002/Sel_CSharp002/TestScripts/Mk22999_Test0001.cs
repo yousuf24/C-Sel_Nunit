@@ -16,6 +16,7 @@ namespace Sel_CSharp002.TestScripts
         public void Bm()
         {
             InitializeNormalBrowser();
+            //InitializeHeadlessBrowser();
         }
         [TearDown]
         public void Am()
@@ -31,6 +32,7 @@ namespace Sel_CSharp002.TestScripts
             var resultPageObj= Searchpageobj.Mohsin16();
             resultPageObj.toChannel();*/
             SFLoginAsSalesUser();
+            System.Console.WriteLine("Logged into SF!");
 
 
 
@@ -39,15 +41,10 @@ namespace Sel_CSharp002.TestScripts
 
         private void SFLoginAsSalesUser()
         {
-            
-            //string UID=KeyValutsData.sftestServiceManagerUserName;
-            //string Pwd = KeyValutsData.sftestServiceManagerPassword;
-            
-
             SFLoginPage _sfLoginPage = new SFLoginPage(_seleniumHelper);
             _sfLoginPage.OpenSFUrl(AppConfigData.salesforceUrl);
             _sfLoginPage.CheckedRememberMe();
-            _sfLoginPage.EnterCredentialsAndClickLogin("mohammad.yousuf@wolterskluwer.com.ctttest", "Wk@Apr23");
+            _sfLoginPage.EnterCredentialsAndClickLogin(KeyValutsData.sftestServiceManagerUserName,KeyValutsData.sftestServiceManagerPassword );
 
 
 
