@@ -10,11 +10,11 @@
         "projectUniqueName": "C:\\Users\\HI\\My_Items\\Job\\Softwares\\VisualStudioCode-ws1\\Sel_CSharp002\\Sel_CSharp002.unittest\\Sel_CSharp002.unittest.csproj",
         "projectName": "Sel_CSharp002.unittest",
         "projectPath": "C:\\Users\\HI\\My_Items\\Job\\Softwares\\VisualStudioCode-ws1\\Sel_CSharp002\\Sel_CSharp002.unittest\\Sel_CSharp002.unittest.csproj",
-        "packagesPath": "C:\\Users\\moham\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\HI\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\HI\\My_Items\\Job\\Softwares\\VisualStudioCode-ws1\\Sel_CSharp002\\Sel_CSharp002.unittest\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\moham\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\HI\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -72,7 +72,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.414\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.416\\RuntimeIdentifierGraph.json"
         }
       }
     }

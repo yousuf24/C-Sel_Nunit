@@ -29,6 +29,7 @@ namespace Sel_CSharp002
             //https://www.seleniumeasy.com/test/basic-first-form-demo.html
             //https://my.asos.com/identity/register
             //https://eviltester.github.io/supportclasses/
+            //https://www.ultimateqa.com/simple-html-elements-for-automation/
             
         }
 
