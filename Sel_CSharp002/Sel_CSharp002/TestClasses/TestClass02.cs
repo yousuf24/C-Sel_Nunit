@@ -14,6 +14,8 @@ namespace Sel_CSharp002
 {       [TestFixture]
        class TestClass02
     {   public IWebDriver driver;
+        By xp = By.XPath("//input[@value='0']");
+
 
         [SetUp]
         public void setUp()
@@ -22,15 +24,18 @@ namespace Sel_CSharp002
             string path = @"C:\Users\HI\My_Items\Job\Softwares\Jar Files\Browser Drivers\chromedriver.exe";
             driver = new ChromeDriver(path);
             
-            driver.Navigate().GoToUrl("https://eviltester.github.io/supportclasses/");
+            driver.Navigate().GoToUrl("http://the-internet.herokuapp.com/horizontal_slider");
             driver.Manage().Window.Maximize();
             //http://www.uitestingplayground.com/ ; 
-            //https://www.toolsqa.com/iframe-practice-page
+            //https://demoqa.com
+            //https://www.toolsqa.com/iframe-practice-page {tips & tricks}
             //https://www.seleniumeasy.com/test/basic-first-form-demo.html
             //https://my.asos.com/identity/register
             //https://eviltester.github.io/supportclasses/
             //https://www.ultimateqa.com/simple-html-elements-for-automation/
-            
+            //http://the-internet.herokuapp.com/
+            //https://practicetestautomation.com/practice-test-login
+
         }
 
         [Test]
@@ -54,7 +59,8 @@ namespace Sel_CSharp002
 
             String ti = driver.Title;
             Console.WriteLine(ti);
-            Assert.AreEqual(ti, "Internet Speed Test | Fast.com");//.Null() ; .IsTrue(); .AreNotEqual()
+            int ElementWidth=driver.FindElement(xp).Size.Width;
+            //Assert.AreEqual(ti, "Internet Speed Test | Fast.com");//.Null() ; .IsTrue(); .AreNotEqual()
             
 
         }

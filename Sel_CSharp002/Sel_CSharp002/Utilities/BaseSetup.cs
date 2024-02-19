@@ -11,7 +11,7 @@ namespace Sel_CSharp002.Utilities
         [SetUp]
         public void Before()
         {
-            InitializeNormalBrowser();
+            InitializeNormalBrowserByWDManager();
             //InitializeHeadlessBrowser();
         }
 

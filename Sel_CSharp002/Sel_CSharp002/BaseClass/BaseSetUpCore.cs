@@ -28,6 +28,18 @@ namespace Sel_CSharp002.BaseClass
                 _pdfHelper = new PdfHelper();
             }
         }
+        public void InitializeNormalBrowserByWDManager(string browser = "")
+        {
+            if (_driver == null)
+            {
+                BrowserFactoryHelper browFac = new BrowserFactoryHelper();
+                _driver = browFac.CreateDriverInstanceByWebDriverManager(browser);
+                _driver.Manage().Window.Size = new Size(1366, 768);
+                _seleniumHelper = new SeleniumHelper(_driver);
+                _fileHelper = new FileHelper();
+                _pdfHelper = new PdfHelper();
+            }
+        }
         public void InitializeHeadlessBrowser(string browser = "")
         {
             if (_driver == null)
