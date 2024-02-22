@@ -75,6 +75,47 @@ namespace KarthikProj
 
             obj2.Add(1, 2, 4, 56, 23);
 
+            List<int> lst = new List<int>() { 1, 4, 3, 44, 5, 56, 18 };
+            List<int> lst2 = new List<int>() { };
+            var fst = lst.FirstOrDefault();
+            var second = lst2.FirstOrDefault();
+            Console.WriteLine("First:Second " + fst + " : " + second);
+
+            //Distinct
+            var uniq = lst.Distinct().ToList();
+            //Filter 
+            var lstEven = lst.Where(x => x % 2 == 0).ToList();
+            //Order by ASC
+            var lstAsc = lst.OrderBy(x => x).ToList();
+            //Order by DESC
+            var lstDesc = lst.OrderByDescending(x => x).ToList();
+            //CheckEven [ any one]
+            var checkEven = lst.Any(x => x % 2 == 0);
+            //CheckEvn
+            var checkAllForEven = lst.All(x => x % 2 == 0);
+            //Random 10digit string
+            string str = "abcdefghijklmnopqrstuvwxyz";
+            Random rand = new Random();
+            string randomStr = new String(Enumerable.Repeat(str, 10).Select(x => x[rand.Next(0, str.Length)]).ToArray());
+            Console.WriteLine(randomStr);
+            //skip .skip(), limit 3 use .Take(3)
+
+            //Zip
+            var numbers = new List<int>() { 101,102,103,104};
+            var names = new List<string>() { "sai", "priya", "prabhavathi", "yousuf" };
+            var result=numbers.Zip(names, (num, nm) => $"{num}->{nm}");
+
+            //Aggregate
+            numbers.Aggregate((accum, num) => accum + num);
+
+            //SelectMany
+            var lstOfOrders = new List<Order>()
+            {
+                new Order(){ Id=1,Products=new List<string>{ "representation","Subscription"} },
+                new Order(){ Id=1,Products=new List<string>{ "ARMS","ANR"} }
+            };
+            var lstOfproducts=lstOfOrders.SelectMany(orderObj => orderObj.Products);
+
             Console.Read();
         }
 
@@ -311,4 +352,10 @@ public class Address
     public int Flat { get; set; }
     public String Street { get; set; }
     public String country { get; set; }
+}
+
+public class Order
+{
+    public int Id { get; set; }
+    public List<string> Products { get; set; }
 }
