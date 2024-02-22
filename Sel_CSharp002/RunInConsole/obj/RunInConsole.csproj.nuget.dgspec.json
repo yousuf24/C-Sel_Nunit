@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\HI\\My_Items\\Job\\Softwares\\VisualStudioCode-ws1\\Karthik\\KarthikProj\\KarthikProj.csproj": {}
+    "C:\\Users\\HI\\My_Items\\Job\\Softwares\\VisualStudioCode-ws1\\Sel_CSharp002\\RunInConsole\\RunInConsole.csproj": {}
   },
   "projects": {
-    "C:\\Users\\HI\\My_Items\\Job\\Softwares\\VisualStudioCode-ws1\\Karthik\\KarthikProj\\KarthikProj.csproj": {
+    "C:\\Users\\HI\\My_Items\\Job\\Softwares\\VisualStudioCode-ws1\\Sel_CSharp002\\RunInConsole\\RunInConsole.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\HI\\My_Items\\Job\\Softwares\\VisualStudioCode-ws1\\Karthik\\KarthikProj\\KarthikProj.csproj",
-        "projectName": "KarthikProj",
-        "projectPath": "C:\\Users\\HI\\My_Items\\Job\\Softwares\\VisualStudioCode-ws1\\Karthik\\KarthikProj\\KarthikProj.csproj",
+        "projectUniqueName": "C:\\Users\\HI\\My_Items\\Job\\Softwares\\VisualStudioCode-ws1\\Sel_CSharp002\\RunInConsole\\RunInConsole.csproj",
+        "projectName": "RunInConsole",
+        "projectPath": "C:\\Users\\HI\\My_Items\\Job\\Softwares\\VisualStudioCode-ws1\\Sel_CSharp002\\RunInConsole\\RunInConsole.csproj",
         "packagesPath": "C:\\Users\\HI\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\HI\\My_Items\\Job\\Softwares\\VisualStudioCode-ws1\\Karthik\\KarthikProj\\obj\\",
+        "outputPath": "C:\\Users\\HI\\My_Items\\Job\\Softwares\\VisualStudioCode-ws1\\Sel_CSharp002\\RunInConsole\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\HI\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -39,24 +39,6 @@
       "frameworks": {
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
-          "dependencies": {
-            "Selenium.WebDriver": {
-              "target": "Package",
-              "version": "[4.8.0, )"
-            },
-            "System.Collections.NonGeneric": {
-              "target": "Package",
-              "version": "[4.3.0, )"
-            },
-            "System.Linq": {
-              "target": "Package",
-              "version": "[4.3.0, )"
-            },
-            "System.Linq.Expressions": {
-              "target": "Package",
-              "version": "[4.3.0, )"
-            }
-          },
           "imports": [
             "net461",
             "net462",
