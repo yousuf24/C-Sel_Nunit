@@ -109,12 +109,19 @@ namespace KarthikProj
             numbers.Aggregate((accum, num) => accum + num);
 
             //SelectMany
-            var lstOfOrders = new List<Order>()
-            {
-                new Order(){ Id=1,Products=new List<string>{ "representation","Subscription"} },
-                new Order(){ Id=1,Products=new List<string>{ "ARMS","ANR"} }
-            };
-            var lstOfproducts=lstOfOrders.SelectMany(orderObj => orderObj.Products);
+            //var lstOfOrders = new List<Order>()
+            //{
+            //    new Order(){ Id=1,Products=new List<string>{ "representation","Subscription"} },
+            //    new Order(){ Id=1,Products=new List<string>{ "ARMS","ANR"} }
+            //};
+            //var lstOfproducts=lstOfOrders.SelectMany(orderObj => orderObj.Products);
+
+            int i = 5;
+            int j = 6;
+            calc(ref i);//i =25 // here x will point to 25 as well
+            calc(6);//j=6 //prints 216
+            Console.WriteLine(i);//prints 25
+            
 
             Console.Read();
         }
@@ -321,8 +328,15 @@ namespace KarthikProj
         }
 
         List<String> names = new List<String>() { "Joey", "chandler", "Rachel", "monica", "ross", "phoebe" };
-        
-  
+        static void calc(ref int x)
+        {
+            x = x * x;
+        }
+        static void calc(int x)
+        {
+            Console.WriteLine(x * x * x);
+        }
+
     }
     public class User
     {
